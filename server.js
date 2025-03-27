@@ -20,9 +20,11 @@ app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 
 // Enable CORS for all routes
 app.use(cors({
-  origin: 'http://localhost:5173', // Allow requests from this origin
-  credentials: true, // Allow cookies and credentials
+  origin: 'https://portfolio-frontend-xjcq.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
 }));
+
 
 // Connect to MongoDB
 connectDB();
