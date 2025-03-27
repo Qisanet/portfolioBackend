@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 
 // Enable CORS for all routes
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://portfolio-frontend-xjcq.vercel.app']
+  origin: ['https://portfolio-frontend-81uy.vercel.app']
 }));
 
 
