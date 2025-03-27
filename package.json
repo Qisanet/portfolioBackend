@@ -4,7 +4,7 @@
   "main": "server.js",
   "scripts": {
     "type": "module",
-    "dev": "nodemon sever.js"
+    "dev": "npx nodemon server.js"
   },
   "keywords": [],
   "author": "",
