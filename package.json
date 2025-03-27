@@ -2,8 +2,9 @@
   "name": "portofilio",
   "version": "1.0.0",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "type": "module",
+    "start": "node server.js",
     "dev": "npx nodemon server.js"
   },
   "keywords": [],
