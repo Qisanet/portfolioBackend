@@ -71,7 +71,7 @@ app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 
 // Enable CORS
 app.use(cors({
-  origin: 'https://portfolio-frontend-inky-five.vercel.app', // Ensure this matches your frontend
+  origin: '*', // Ensure this matches your frontend
   methods: 'GET,POST,PUT,DELETE,OPTIONS',
   allowedHeaders: 'Content-Type, Authorization',
   credentials: true
