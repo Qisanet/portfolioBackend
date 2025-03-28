@@ -1,56 +1,3 @@
-// const express = require('express');
-// const dotenv = require('dotenv');
-// const connectDB = require('./config/db');
-// const adminRoutes = require('./routes/adminRoutes');
-// const projectRoutes = require('./routes/projectRoutes');
-// const contactRoutes = require('./routes/contactRoute');
-// const cors = require('cors');
-// const { loginAdmin } = require('./controllers/adminController');
-
-// // Load environment variables
-// dotenv.config();
-
-// // Initialize Express app
-// const app = express();
-
-// // Middleware
-// app.use(express.json({ limit: "1mb" })); // Adjust as needed
-// app.use(express.urlencoded({ extended: true, limit: "1mb" }));
-// // Parse JSON request bodies
-
-// // Enable CORS for all routes
-// app.use(cors({
-//   origin: ['https://portfolio-frontend-81uy.vercel.app']
-// }));
-
-
-// // Connect to MongoDB
-// connectDB();
-
-// // Routes
-// app.use('/admin', loginAdmin); // All admin-related routes
-// app.use('/projects', projectRoutes); // All project-related routes
-// app.use('/contact', contactRoutes);// All contact-related routes
-
-// // Global error handler
-// app.use((err, req, res, next) => {
-//   console.error('Global error handler:', err);
-
-//   // Customize the response based on the error type
-//   if (err.name === 'ValidationError') {
-//     return res.status(400).json({ message: 'Validation error', errors: err.errors });
-//   }
-
-//   res.status(500).json({ message: 'Something went wrong on the server' });
-// });
-
-// // Start the server
-// const PORT = process.env.PORT || 5151;
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
-
-
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
@@ -65,17 +12,14 @@ dotenv.config();
 // Initialize Express app
 const app = express();
 
-// Middleware
-app.use(express.json({ limit: "1mb" }));
-app.use(express.urlencoded({ extended: true, limit: "1mb" }));
-
-// Enable CORS
+// ✅ Enable CORS before any routes
 app.use(cors({
-  origin: '*', // Allows all origins
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allows all HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allows these headers
-  credentials: false // Set to false since '*' does not work with credentials
+  origin: '*', // Allow all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
 }));
+
+// ✅ Handle preflight requests properly
 app.options('*', (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -83,8 +27,9 @@ app.options('*', (req, res) => {
   res.sendStatus(200);
 });
 
-// preflight requests
-app.options('*', cors());
+// Middleware
+app.use(express.json({ limit: "1mb" }));
+app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 
 // Connect to MongoDB
 connectDB();
@@ -98,7 +43,7 @@ app.use('/contact', contactRoutes); // Contact form routes
 app.use((err, req, res, next) => {
   console.error('Global error handler:', err);
 
-  if (err.name === 'VvalidationError') {
+  if (err.name === 'ValidationError') {  // ✅ Fixed typo
     return res.status(400).json({ message: 'Validation error', errors: err.errors });
   }
 
