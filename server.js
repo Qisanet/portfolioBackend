@@ -71,13 +71,19 @@ app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 
 // Enable CORS
 app.use(cors({
-  origin: '*', // Ensure this matches your frontend
-  methods: 'GET,POST,PUT,DELETE,OPTIONS',
-  allowedHeaders: 'Content-Type, Authorization',
-  credentials: true
+  origin: '*', // Allows all origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allows all HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allows these headers
+  credentials: false // Set to false since '*' does not work with credentials
 }));
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.sendStatus(200);
+});
 
-// Handle preflight requests
+// preflight requests
 app.options('*', cors());
 
 // Connect to MongoDB
@@ -92,7 +98,7 @@ app.use('/contact', contactRoutes); // Contact form routes
 app.use((err, req, res, next) => {
   console.error('Global error handler:', err);
 
-  if (err.name === 'ValidationError') {
+  if (err.name === 'VvalidationError') {
     return res.status(400).json({ message: 'Validation error', errors: err.errors });
   }
 
