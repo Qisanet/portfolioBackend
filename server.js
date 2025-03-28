@@ -5,6 +5,7 @@ const adminRoutes = require('./routes/adminRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const contactRoutes = require('./routes/contactRoute');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 // Load environment variables
 dotenv.config();
